@@ -1,4 +1,4 @@
-# Desafio Front-end Credistar
+# Desafio Back-end Credistar
 
 > Desafio para ingressar como Front-end Developer na Credistar
 
