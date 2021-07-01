@@ -44,8 +44,7 @@ onde, na sua entidade:
 
 1. Faça um CRUD simples, considerando como sensíveis os campos citados acima
 
-2. Use o algoritmo de sua preferência para criptografia. Sugestão: [SHA-512](https://en.wikipedia.org/wiki/SHA-2) ou [PBKDF2](https://en.wikipedia.org/wiki/PBKDF2)
-
+2. Use o algoritmo de sua preferência para criptografia. Sugestão: [aes-192-cbc](https://encode-decode.com/aes-192-cbc-encrypt-online/) 
 ## FAQ
 
 - Preciso necessariamente fazer um fork do projeto?
