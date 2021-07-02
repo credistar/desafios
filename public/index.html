@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credistar | Checkout</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        outline: none;
+      }
+
+      html, body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(180deg,#fbc03c 5%,#f7931e 100%);
+      }
+
+      body, button {
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+      }
+
+      .box-container {
+        border-radius: 5px;
+        padding: 20px;
+        background: #fff;
+      }
+
+      .title {
+        font-size: 20px;
+        margin-bottom: 20px;
+      }
+
+      .input-container {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-container input {
+        width: 300px;
+        padding: 12px;
+        border: 1px solid #DDD;
+        margin-bottom: 20px;
+        border-radius: 5px;
+        transition: border 500ms;
+      }
+
+      .input-container input:focus {
+        border: 1px solid #fbc03c;
+      }
+
+      .box-container button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #fbc03c;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        background: none;
+        background-image: linear-gradient(180deg,#fbc03c 5%,#f7931e 100%);
+      }
+    </style>
+  </head>
+  <body>
+    <div class='box-container'>
+      <p class='title'>
+        Detalhes de Pagamento
+      </p>
+      <form onsubmit="handleSubmitForm(event)">
+        <div class='input-container'>
+          <input id='credit-card-number' autocomplete='off' autocapitalize='off' placeholder="Nome do Titular" />
+          <input id='cardholder-name' autocomplete='off' autocapitalize='off' placeholder="Número do Cartão" maxlength="13" />
+          <input id='cvv' placeholder="CVV" maxlength="3" />
+        </div>
+        <p>Valor Total: R$ 1.000,00</p>
+        <button type='submit'>PAGAR</button>
+      </form>
+    </div>
+    <script>
+      function handleSubmitForm(event) {
+        event.preventDefault();
+
+        const creditCardNumber = document.getElementById('credit-card-number').value;
+        const cardholderName = document.getElementById('cardholder-name').value;
+        const cvv = document.getElementById('cvv').value;
+        const value = 1000;
+
+        if (creditCardNumber === '' || cardholderName === '' || cvv === '') {
+          return alert('Preencha o formulário corretamente.');
+        }
+
+        if (cardholderName.length < 3) {
+          return alert('O titular do cartão precisa conter no mínimo 3 caracteres.');
+        }
+
+        if (creditCardNumber.length >= 13) {
+          return alert('O número do cartão precisa conter no mínimo 13 caracteres.');
+        }
+
+        if (cvv.length !== 3) {
+          return alert('O CVV do cartão precisa conter 3 números.');
+        }
+
+        fetch('http://localhost:3000/process-payment',
+          {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({ creditCardNumber, cardholderName, cvv, value })
+          }
+        )
+        .finally(() => {
+          document.getElementById('credit-card-number').value = '';
+          document.getElementById('cardholder-name').value = '';
+          document.getElementById('cvv').value = '';
+        });
+      }
+    </script>
+  </body>
+</html>
